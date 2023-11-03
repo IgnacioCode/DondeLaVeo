@@ -5,6 +5,8 @@ var imgEndpoint = "https://image.tmdb.org/t/p/w500";
 var inputText = document.getElementById("movie-search");
 var modal = document.getElementById('filmInfo');
 
+
+
 modal.addEventListener("click",function(e){
     if (e.target === modal) {
         modal.style.display = 'none';
