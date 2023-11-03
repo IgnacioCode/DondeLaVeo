@@ -2,7 +2,6 @@ var testButton = document.getElementById('testButton');
 
 var accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNTlhMDMwNDZjODc1NjBlNWNlNjFlMWE4ZjU2YzkxMCIsInN1YiI6IjY1NDNmZWFmNDFhNTYxMzM2ZDgzMzBhMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.m-mO8EzxG2yDs8YI7HqkVhUtNylWrgPz1rTT3XF7Fkk"
 var imgEndpoint = "https://image.tmdb.org/t/p/w500";
-var serviceEndpoint = "https://api.themoviedb.org/3/movie/{movie_id}/watch/providers";
 var inputText = document.getElementById("movie-search");
 var modal = document.getElementById('filmInfo');
 
@@ -22,7 +21,7 @@ const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNTlhMDMwNDZjODc1NjBlNWNlNjFlMWE4ZjU2YzkxMCIsInN1YiI6IjY1NDNmZWFmNDFhNTYxMzM2ZDgzMzBhMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.m-mO8EzxG2yDs8YI7HqkVhUtNylWrgPz1rTT3XF7Fkk'
+      Authorization: accessToken
     }
 };
   
@@ -45,11 +44,36 @@ function searchMovie(movieName){
     .catch(err => console.error(err));
 }
 
+async function loadServices(filmID){
+
+    const serviceOptions = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: accessToken
+        }
+    };
+
+    let result;
+
+    await fetch("https://api.themoviedb.org/3/movie/"+filmID+"/watch/providers", serviceOptions)
+    .then(response => response.json())
+    .then(response => {
+        result = response.results.AR;
+        
+    })
+    .catch(err => console.error(err));
+    console.log(result);
+    return result;
+    
+    
+}
+
 function listMovies(list){
     var resultDiv = document.getElementById("resultDiv");
     while (resultDiv.firstChild) {
         resultDiv.removeChild(resultDiv.firstChild);
-      }
+    }
     list.sort(function(a, b) {
         return b.popularity - a.popularity;
     });
@@ -70,14 +94,83 @@ function listMovies(list){
         newDiv.setAttribute("filmID",element.id);
         newDiv.setAttribute("filmTitle",element.original_title);
         newDiv.setAttribute("releaseYear",element.release_date.slice(0,4));
+        newDiv.setAttribute("filmDescription",element.overview);
 
-        newDiv.addEventListener('click', function() {
+        newDiv.addEventListener('click', async function() {
+            
+            let streamingContainer = document.getElementById("Streaming");
+            let buyContainer = document.getElementById("Buy");
+            let rentContainer = document.getElementById("Rent");
+
             modal.style.display = 'flex';
             var shownTitle = document.getElementById("filmTitle");
             var shownYear = document.getElementById("filmYear");
+            var shownDesc = document.getElementById("filmDescription");
 
             shownTitle.textContent = newDiv.getAttribute("filmTitle");
             shownYear.textContent = newDiv.getAttribute("releaseYear");
+            shownDesc.textContent = newDiv.getAttribute("filmDescription");
+
+            while (streamingContainer.children.length > 1) {
+                streamingContainer.removeChild(streamingContainer.lastChild);
+            }
+
+            while (buyContainer.children.length > 1) {
+                buyContainer.removeChild(buyContainer.lastChild);
+            }
+
+            while (rentContainer.children.length > 1) {
+                rentContainer.removeChild(rentContainer.lastChild);
+            }
+
+            let services = await loadServices(newDiv.getAttribute("filmID"));
+            
+            if(services != undefined){
+
+                let streamingServices = services.flatrate;
+                let buyServices = services.buy;
+                let rentServices = services.rent;
+
+                if(streamingServices!=null){
+                    streamingServices.forEach(service =>{
+
+                        let newServiceDiv = document.createElement("div");
+                        newServiceDiv.className="serviceLogo";
+                        imgUrl = imgEndpoint + service.logo_path;
+                        newServiceDiv.style.backgroundImage = "url("+imgUrl+")";
+        
+                        streamingContainer.appendChild(newServiceDiv);
+        
+                    })
+                }
+
+                if(buyServices!=null){
+                    buyServices.forEach(service =>{
+
+                        let newServiceDiv = document.createElement("div");
+                        newServiceDiv.className="serviceLogo";
+                        imgUrl = imgEndpoint + service.logo_path;
+                        newServiceDiv.style.backgroundImage = "url("+imgUrl+")";
+        
+                        buyContainer.appendChild(newServiceDiv);
+        
+                    })
+                }
+
+                if(rentServices!=null){
+                    rentServices.forEach(service =>{
+
+                        let newServiceDiv = document.createElement("div");
+                        newServiceDiv.className="serviceLogo";
+                        imgUrl = imgEndpoint + service.logo_path;
+                        newServiceDiv.style.backgroundImage = "url("+imgUrl+")";
+        
+                        rentContainer.appendChild(newServiceDiv);
+        
+                    })
+                }
+                
+            }
         });
 
         resultDiv.appendChild(newDiv)
@@ -85,4 +178,6 @@ function listMovies(list){
 
     });
 }
+
+
 
