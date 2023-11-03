@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Donde La Veo</title>
+  <link rel="stylesheet" type="text/css" href="..\styles\style.css">
+  <meta charset="UTF-8">  
+</head>
+<body>
+  <header>
+    <label class="logoTitle">Donde La Veo 📽️</label>
+  </header>
+  <div class="searcher">
+    <label for="movie-search" id="searchLabel">BUSCA TU PELI:</label>
+    <br><br>
+    <input type="text" id="movie-search" name="movie-search">
+  </div>
+  <div class="results" id="resultDiv">
+  </div>
+  <div class="modal" id="filmInfo">
+    <div class="modal-contenido" id="filmInfoContent">
+      <label id="filmTitle">Titulo</label>
+      <label id="filmYear">1900</label>
+      <label id="filmDescription" class="paragraph">filmDescription</label>
+      <label class="caption">Servicios</label>
+      <div id="services" class="service-container">
+        <div id="Streaming" class="logo-container"><label class="category">Streaming</label></div>
+        <div id="Buy" class="logo-container"><label class="category">Compra</label></div>
+        <div id="Rent" class="logo-container"><label class="category">Alquiler</label></div>
+      </div>
+    </div>
+
+  </div>
+  <script src="..\scripts\main.js"></script>
+</body>
+</html>
