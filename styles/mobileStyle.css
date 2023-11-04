@@ -45,7 +45,7 @@
         align-items: stretch;
         align-content: flex-start;
         width: 80%;
-        max-height: 90%;
+        max-height: 80%;
         background-color: #3a3a3a;
         padding: 40px;
         border-radius: 20px;
@@ -92,7 +92,7 @@
     .paragraph{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-weight: lighter;
-        font-size: 15px;
+        font-size: 13px;
         color: white;
     }
     
