@@ -4,11 +4,18 @@ var accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNTlhMDMwNDZjODc1NjBlN
 var imgEndpoint = "https://image.tmdb.org/t/p/w500";
 var inputText = document.getElementById("movie-search");
 var modal = document.getElementById('filmInfo');
+var exitButton = document.getElementById("exitButton");
 
 
 
 modal.addEventListener("click",function(e){
     if (e.target === modal) {
+        modal.style.display = 'none';
+    }
+})
+
+exitButton.addEventListener("click",function(e){
+    if (e.target === exitButton) {
         modal.style.display = 'none';
     }
 })

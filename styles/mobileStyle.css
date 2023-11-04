@@ -45,6 +45,7 @@
         align-items: stretch;
         align-content: flex-start;
         width: 80%;
+        max-height: 90%;
         background-color: #3a3a3a;
         padding: 40px;
         border-radius: 20px;
@@ -148,7 +149,7 @@
     
     label[id="searchLabel"]{
         font-family: Arial, Helvetica, sans-serif;
-        font-size: 50px;
+        font-size: 45px;
         font-weight: bold;
         
     }
@@ -157,8 +158,17 @@
         border: none;
         padding: 10px;
         border-radius: 15px;
-        width: 75%;
-        height: 75px;
+        width: 90%;
+        height: 50px;
+        font-size: 30px;
+    }
+
+    .textButton{
+        position: absolute;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bolder;
         font-size: 50px;
+        left: 80%;
     }
   }
