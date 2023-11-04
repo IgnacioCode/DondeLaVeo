@@ -158,4 +158,7 @@
         width: 75%;
     }
     
+    .textButton{
+        display:none;
+    }
 }
