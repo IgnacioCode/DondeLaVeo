@@ -1,0 +1,8 @@
+{
+    "name": "Donde La Veo",
+    "short_name": "DLV",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1c1c1c", 
+    "theme_color": "#3a3a3a" 
+}
